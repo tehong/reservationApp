@@ -1,22 +1,28 @@
-# Goal/Requirements
+# Demo Reservation App
+This is a repo to demonstrate my ability to implement a React Native ES6 app with Apollo-Client/GraphQL, Jest and Typescript.
+## Architecture Choices
+
+------------------------------------------------------------------------------------------------------
+
+## Original Goal/Requirements
 Create a React Native reservation app using ES6 and pure components. Create at least 2 screens: 1 for listing the existing reservations and 1 for adding a new reservation.
-# Tech Stack
+### Tech Stack
 Please utilize the following technology stack for developing your application.
 - React-Native
 - Apollo-Client
 - Jest/Enzyme
 - Typescript or Flow
-# Back End
+### Back End
 We have provided a GraphQL back end for you: https://us1.prisma.sh/public-luckox-377/reservation-graphql-backend/dev
 Use the following queries from the back end to complete the test. 
 - query: reservations, reservation
 - mutation: createReservation
-# Limitations
+### Limitations
 Please DO NOT use the following items.
 - create-react-native-app, or any other generator (use react-native init to start the project)
 - redux (use another method for local state management)
 - A non git service for hosting (github/gitlab/etc are ok)
-# What We Are Looking For
+### What We Are Looking For
 The following list outlines areas we will be focusing on while evaluating your submission.
 - Code organization (even though this is two features, organize the files as if it were a larger enterprise application)
     - Style organization
