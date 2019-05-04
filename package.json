@@ -11,6 +11,7 @@
     "apollo-boost": "^0.3.1",
     "graphql": "^14.2.1",
     "graphql-tag": "^2.10.1",
+    "isomorphic-fetch": "^2.2.1",
     "react": "16.8.3",
     "react-apollo": "^2.5.5",
     "react-native": "0.59.5",
@@ -21,14 +22,20 @@
   "devDependencies": {
     "@babel/core": "^7.4.4",
     "@babel/runtime": "^7.4.4",
+    "@types/isomorphic-fetch": "^0.0.35",
     "@types/jest": "^24.0.12",
     "@types/react": "^16.8.15",
     "@types/react-native": "^0.57.51",
     "@types/react-navigation": "^3.0.6",
     "@types/react-test-renderer": "^16.8.1",
     "babel-jest": "^24.7.1",
+    "enzyme": "^3.9.0",
     "jest": "^24.7.1",
+    "jest-fetch-mock": "^2.1.2",
+    "jest-serializer-enzyme": "^1.0.0",
     "metro-react-native-babel-preset": "^0.54.0",
+    "react-addons-test-utils": "^15.6.2",
+    "react-dom": "^16.8.6",
     "react-test-renderer": "16.8.6",
     "tslint": "^5.16.0",
     "tslint-eslint-rules": "^5.4.0",
@@ -37,6 +44,13 @@
   },
   "jest": {
     "preset": "react-native",
+    "automock": false,
+    "setupFiles": [
+      "./test/setupJest.tsx"
+    ],
+    "snapshotSerializers": [
+      "./node_modules/jest-serializer-enzyme"
+    ],
     "moduleFileExtensions": [
       "ts",
       "tsx",
@@ -46,6 +60,9 @@
       "^.+\\.(js)$": "<rootDir>/node_modules/babel-jest",
       "\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
+    "transformIgnorePatterns": [
+      "node_modules/(?!react-native|react-navigation|react-navigation-stack)/"
+    ],
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
     "testPathIgnorePatterns": [
       "\\.snap$",

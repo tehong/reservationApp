@@ -1,27 +1,65 @@
 import React, { PureComponent } from "react";
-import { View, Text, StyleSheet, Button } from "react-native";
+import { View, Text, StyleSheet, Button, TextInput } from "react-native";
 import { ROUTES } from "../navigation/RootNavigation";
+import { ScreenProps } from "react-navigation";
+import { ReservationConsumer } from "../providers/ReservationProvider";
 
-interface Props {}
-class HomeScreen extends PureComponent<Props> {
-  private addReservation = () => {
-    this.props.navigation.navigate(ROUTES.RootAddReservation);
+interface Props {
+  navigation: ScreenProps;
+}
+interface State {
+  value: string;
+}
+class HomeScreen extends PureComponent<Props, State> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      name: ""
+    };
+  }
+  private onChangeText = (name: string) => {
+    // make a copy and make the change
+    this.setState({ name });
   };
-  private listReservation = () => {
-    this.props.navigation.navigate(ROUTES.RootListReservation);
+  private enterName = () => {
+    var name = this.state.name;
+    this.props.updateReservation({ name });
+    this.props.navigation.navigate(ROUTES.RootAction);
   };
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to my reservation system!</Text>
-        <Button title={"List Reservation"} onPress={this.listReservation} />
-        <Button title={"Add Reservation"} onPress={this.addReservation} />
+        <Text style={styles.welcome}>Welcome to hotel reservation system!</Text>
+        <Text style={styles.welcome}>Please enter your name:</Text>
+        <TextInput
+          style={styles.textInput}
+          value={this.state.value}
+          onChangeText={this.onChangeText}
+        />
+        <Button title={"Enter"} onPress={this.enterName} />
       </View>
     );
   }
 }
 
-export default HomeScreen;
+// Added to connect ReservationConsumer
+// To pass props to AccountUpdate
+// Before component initialization
+// As the AccountUpdate.state requires
+// The new props
+const ConnectedReservationUpdate = (props: any) => (
+  <ReservationConsumer>
+    {({ name, updateReservation }) => (
+      <HomeScreen
+        {...props}
+        name={name}
+        updateReservation={updateReservation}
+      />
+    )}
+  </ReservationConsumer>
+);
+
+export default ConnectedReservationUpdate;
 
 const styles = StyleSheet.create({
   container: {
@@ -35,9 +73,10 @@ const styles = StyleSheet.create({
     textAlign: "center",
     margin: 10
   },
-  instructions: {
-    textAlign: "center",
-    color: "#333333",
-    marginBottom: 5
+  textInput: {
+    width: 300,
+    height: 30,
+    borderWidth: 1,
+    borderColor: "grey"
   }
 });

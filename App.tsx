@@ -12,16 +12,17 @@ import React, { PureComponent } from "react";
 import { Platform, StyleSheet, Text, View, Button } from "react-native";
 import RootNavigation from "./src/navigation/RootNavigation";
 import Backend, { BackendProvider } from "./src/api/Backend";
+import ReservationProvider from "./src/providers/ReservationProvider";
 
 interface Props {}
 export default class App extends PureComponent<Props> {
-  addReservation = () => {};
-  listReservation = () => {};
   render() {
     return (
-      <BackendProvider>
-        <RootNavigation />
-      </BackendProvider>
+      <ReservationProvider>
+        <BackendProvider>
+          <RootNavigation />
+        </BackendProvider>
+      </ReservationProvider>
     );
   }
 }

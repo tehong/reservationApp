@@ -7,9 +7,16 @@ import {
   FlatList
 } from "react-native";
 import Backend from "../api/Backend";
+import { ReservationConsumer } from "../providers/ReservationProvider";
 
-interface Props {}
-class ListReservationScreen extends PureComponent {
+interface Props {
+  name: string;
+}
+interface State {
+  reservations: any;
+  isLoading: any;
+}
+class ListReservationScreen extends PureComponent<Props, State> {
   constructor(props: Readonly<{}>) {
     super(props);
     this.state = {
@@ -18,8 +25,8 @@ class ListReservationScreen extends PureComponent {
     };
   }
 
-  keyExtractor = (item, index) => {
-    return item + index;
+  keyExtractor = (item: any, index: number) => {
+    return item.id;
   };
   renderItem = ({ item, index }) => {
     var name = item.name;
@@ -34,7 +41,7 @@ class ListReservationScreen extends PureComponent {
   };
 
   componentDidMount() {
-    Backend.listReservations("Giraldo")
+    Backend.listReservations(this.props.name)
       .then(data => {
         var reservations = data.reservations;
         this.setState({ reservations, isLoading: false });
@@ -63,13 +70,25 @@ class ListReservationScreen extends PureComponent {
 
     return (
       <View style={styles.container}>
-        <Text style={{ fontWeight: "bold" }}>Your reservations:</Text>
+        <Text style={{ fontWeight: "bold" }}>
+          Hi {this.props.name}!, here are your reservations:
+        </Text>
         {content}
       </View>
     );
   }
 }
-export default ListReservationScreen;
+
+// Connect props from ReservationConsumer
+// Before component initialization
+const ConnectedListReservation = (props: any) => (
+  <ReservationConsumer>
+    {//@ts-ignore
+    ({ name }) => <ListReservationScreen {...props} name={name} />}
+  </ReservationConsumer>
+);
+
+export default ConnectedListReservation;
 
 const styles = StyleSheet.create({
   container: {
