@@ -2,7 +2,6 @@ import React, { PureComponent } from "react";
 import { ApolloClient, HttpLink, InMemoryCache } from "apollo-boost";
 import { ApolloProvider, graphql } from "react-apollo";
 import gql from "graphql-tag";
-import fetch from "isomorphic-fetch";
 
 const BACKEND_URL =
   "https://us1.prisma.sh/public-luckox-377/reservation-graphql-backend/dev";
@@ -10,8 +9,7 @@ const BACKEND_URL =
 // see https://blog.brainsandbeards.com/part-2-setting-up-apollo-client-in-a-react-native-app-e766c7e872e2
 const client = new ApolloClient({
   link: new HttpLink({
-    uri: BACKEND_URL,
-    fetch: fetch
+    uri: BACKEND_URL
   }),
   cache: new InMemoryCache()
 });

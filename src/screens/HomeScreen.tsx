@@ -6,9 +6,10 @@ import { ReservationConsumer } from "../providers/ReservationProvider";
 
 interface Props {
   navigation: ScreenProps;
+  updateReservation: any;
 }
 interface State {
-  value: string;
+  name: string;
 }
 class HomeScreen extends PureComponent<Props, State> {
   constructor(props: any) {

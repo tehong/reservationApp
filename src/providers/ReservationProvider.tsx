@@ -5,12 +5,17 @@ const ReservationContext = React.createContext("Reservation");
 // Create an exportable consumer that can be injected into components
 export const ReservationConsumer = ReservationContext.Consumer;
 // Create the provider using a traditional React.Component class
-class ReservationProvider extends PureComponent {
-  state = {
-    name: "",
-    updateReservation: (updatedReservation: any) =>
-      this.updateReservation(updatedReservation)
-  };
+interface Props {}
+interface State {}
+class ReservationProvider extends PureComponent<Props, State> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      name: "",
+      updateReservation: (updatedReservation: any) =>
+        this.updateReservation(updatedReservation)
+    };
+  }
   updateReservation = (updatedReservation: any) => {
     this.setState(prevState => ({
       ...prevState,

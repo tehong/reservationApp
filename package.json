@@ -5,6 +5,7 @@
   "scripts": {
     "clean-node": "watchman watch-del-all && rm -rf ./node_modules && npm cache verify && yarn cache clean && rm -rf /tmp/metro-bundler-cache-* && yarn install && rm -rf /tmp/haste-map-react-native-packager-*",
     "start": "node node_modules/react-native/local-cli/cli.js start",
+    "lint": "tslint --project tsconfig.json",
     "test": "jest"
   },
   "dependencies": {
@@ -22,6 +23,8 @@
   "devDependencies": {
     "@babel/core": "^7.4.4",
     "@babel/runtime": "^7.4.4",
+    "@types/enzyme": "^3.9.1",
+    "@types/enzyme-adapter-react-16": "^1.0.5",
     "@types/isomorphic-fetch": "^0.0.35",
     "@types/jest": "^24.0.12",
     "@types/react": "^16.8.15",
@@ -30,6 +33,7 @@
     "@types/react-test-renderer": "^16.8.1",
     "babel-jest": "^24.7.1",
     "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.12.1",
     "jest": "^24.7.1",
     "jest-fetch-mock": "^2.1.2",
     "jest-serializer-enzyme": "^1.0.0",
@@ -44,30 +48,23 @@
   },
   "jest": {
     "preset": "react-native",
-    "automock": false,
-    "setupFiles": [
-      "./test/setupJest.tsx"
-    ],
-    "snapshotSerializers": [
-      "./node_modules/jest-serializer-enzyme"
-    ],
+    "transform": {
+      "^.+\\.js$": "<rootDir>/node_modules/react-native/jest/preprocessor.js",
+      "\\.(ts|tsx)$": "ts-jest"
+    },
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "tsconfig.jest.json"
+      }
+    },
     "moduleFileExtensions": [
       "ts",
       "tsx",
       "js"
     ],
-    "transform": {
-      "^.+\\.(js)$": "<rootDir>/node_modules/babel-jest",
-      "\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
-    },
-    "transformIgnorePatterns": [
-      "node_modules/(?!react-native|react-navigation|react-navigation-stack)/"
+    "setupFiles": [
+      "./tests/setup.js"
     ],
-    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
-    "testPathIgnorePatterns": [
-      "\\.snap$",
-      "<rootDir>/node_modules/"
-    ],
-    "cacheDirectory": ".jest/cache"
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$"
   }
 }
