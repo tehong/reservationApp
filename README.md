@@ -4,11 +4,11 @@ This is a repo to demonstrate implementing a React Native ES6 app with React Con
 - React Context API is used for tree-scoped store for to reduce prop drilling.
 - Backend (GraphQL) component encapsulates backend api that can be accessed by all components. It is designed so Backend api stays in a wrapper component.
 - GraphQL is set up to be used in both ways:
-  - As callable api functions via the static Backend API functions.
-  - As component via ApolloProvider encapsulated in BackendProvider.
+  - As static api functions in the Backend singleton class to access the Apollo api functions.
+  - Utilizing Apollo's render prop api via ApolloProvider encapsulated in BackendProvider.
 - React Navigation is used for the routing navigator.
 - ES6 
-- All components are pure components
+- All class components are pure components
 ## Directories
 - assets:  App image and icon assets should be under this directory
 - src: App sources
@@ -17,6 +17,8 @@ This is a repo to demonstrate implementing a React Native ES6 app with React Con
   - providers: provider components
   - screens: screen components 
   - navigation: route navigators
+## Problems
+- Jest is not working with babel 7.  It seems that the "transformIgnorePatterns" setting in package.json is being ignore.
 
 ------------------------------------------------------------------------------------------------------
 

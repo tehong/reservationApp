@@ -1,8 +1,11 @@
 import React, { PureComponent } from "react";
 import RootNavigation from "./navigation/RootNavigation";
-import { BackendProvider } from "./api/Backend";
+import Backend, { BackendProvider } from "./api/Backend";
 import ReservationProvider from "./providers/ReservationProvider";
-import { View } from "react-native";
+// import { View } from "react-native";
+
+// init the backend
+Backend.initialize();
 
 interface Props {}
 export default class ReservationApp extends PureComponent<Props> {

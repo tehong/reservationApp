@@ -7,13 +7,7 @@ const BACKEND_URL =
   "https://us1.prisma.sh/public-luckox-377/reservation-graphql-backend/dev";
 
 // see https://blog.brainsandbeards.com/part-2-setting-up-apollo-client-in-a-react-native-app-e766c7e872e2
-const client = new ApolloClient({
-  link: new HttpLink({
-    uri: BACKEND_URL
-  }),
-  cache: new InMemoryCache()
-});
-
+let client: any;
 interface Props {}
 export class BackendProvider extends PureComponent<Props> {
   render() {
@@ -34,7 +28,14 @@ export default class Backend {
   /**
    * Initializes Backend
    */
-  static initialize() {}
+  static initialize() {
+    client = new ApolloClient({
+      link: new HttpLink({
+        uri: BACKEND_URL
+      }),
+      cache: new InMemoryCache()
+    });
+  }
   static getReservationDataField(name = "") {
     var reservationData: ReservationData = {
       name: name,
