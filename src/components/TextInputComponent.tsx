@@ -1,7 +1,7 @@
-import React from "react";
-import { TextInput } from "react-native";
+import React from 'react';
+import {TextInput} from 'react-native';
 
-export const TextInputComponent = ({ value, onChangeText, name, ...props }) => (
+export const TextInputComponent = ({value, onChangeText, name, ...props}) => (
   <TextInput
     value={value}
     onChangeText={value => onChangeText(name, value)}

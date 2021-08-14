@@ -1,13 +1,13 @@
-import React, { PureComponent } from "react";
+import React, {PureComponent} from 'react';
 import {
   View,
   Text,
   StyleSheet,
   ActivityIndicator,
-  FlatList
-} from "react-native";
-import Backend from "../api/Backend";
-import { ReservationConsumer } from "../providers/ReservationProvider";
+  FlatList,
+} from 'react-native';
+import Backend from '../api/Backend';
+import {ReservationConsumer} from '../providers/ReservationProvider';
 
 interface Props {
   name: string;
@@ -21,14 +21,14 @@ class ListReservationScreen extends PureComponent<Props, State> {
     super(props);
     this.state = {
       reservations: [],
-      isLoading: true
+      isLoading: true,
     };
   }
 
   keyExtractor = (item: any, index: number) => {
     return item.id;
   };
-  renderItem = ({ item, index }) => {
+  renderItem = ({item, index}) => {
     var name = item.name;
     var arrivalDate = item.arrivalDate;
     var departureDate = item.departureDate;
@@ -44,15 +44,15 @@ class ListReservationScreen extends PureComponent<Props, State> {
     Backend.listReservations(this.props.name)
       .then(data => {
         var reservations = data.reservations;
-        this.setState({ reservations, isLoading: false });
+        this.setState({reservations, isLoading: false});
       })
       .catch(error => {
-        this.setState({ reservations: [], isLoading: false });
+        this.setState({reservations: [], isLoading: false});
       });
   }
   render() {
     var content = <ActivityIndicator />;
-    var { reservations, isLoading } = this.state;
+    var {reservations, isLoading} = this.state;
     if (!isLoading) {
       if (reservations.length > 0) {
         content = (
@@ -70,7 +70,7 @@ class ListReservationScreen extends PureComponent<Props, State> {
 
     return (
       <View style={styles.container}>
-        <Text style={{ fontWeight: "bold" }}>
+        <Text style={{fontWeight: 'bold'}}>
           Hi {this.props.name}!, here are your reservations:
         </Text>
         {content}
@@ -83,8 +83,10 @@ class ListReservationScreen extends PureComponent<Props, State> {
 // Before component initialization
 const ConnectedListReservation = (props: any) => (
   <ReservationConsumer>
-    {//@ts-ignore
-    ({ name }) => <ListReservationScreen {...props} name={name} />}
+    {
+      //@ts-ignore
+      ({name}) => <ListReservationScreen {...props} name={name} />
+    }
   </ReservationConsumer>
 );
 
@@ -93,15 +95,15 @@ export default ConnectedListReservation;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center"
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   text: {
-    margin: 10
+    margin: 10,
   },
   item: {
     margin: 10,
     borderWidth: 1,
-    borderColor: "pink"
-  }
+    borderColor: 'pink',
+  },
 });

@@ -1,73 +1,58 @@
 {
-  "name": "reservationApp",
+  "name": "newreservationapp",
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "clean-node": "watchman watch-del-all && rm -rf ./node_modules && npm cache verify && yarn cache clean && rm -rf /tmp/metro-bundler-cache-* && yarn install && rm -rf /tmp/haste-map-react-native-packager-*",
-    "start": "node node_modules/react-native/local-cli/cli.js start",
-    "lint": "tslint --project tsconfig.json",
-    "test": "jest"
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "ios-debug": "react-native run-ios --scheme Debug",
+    "start": "react-native start",
+    "test": "jest",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
-    "apollo-boost": "^0.3.1",
-    "graphql": "^14.2.1",
-    "graphql-tag": "^2.10.1",
-    "isomorphic-fetch": "^2.2.1",
-    "react": "16.8.3",
-    "react-apollo": "^2.5.5",
-    "react-native": "0.59.5",
-    "react-native-gesture-handler": "^1.2.1",
-    "react-navigation": "^3.9.1",
-    "uuid": "^3.3.2"
+    "apollo-boost": "^0.4.9",
+    "graphql": "^15.5.1",
+    "graphql-tag": "^2.12.5",
+    "react": "17.0.1",
+    "react-apollo": "^3.1.5",
+    "react-native": "0.64.1",
+    "react-native-gesture-handler": "^1.10.3",
+    "react-native-get-random-values": "^1.7.0",
+    "react-native-safe-area-context": "^3.3.0",
+    "react-navigation": "^4.4.4",
+    "react-navigation-stack": "^2.10.4",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.4.4",
-    "@babel/runtime": "^7.4.4",
-    "@types/enzyme": "^3.9.1",
-    "@types/enzyme-adapter-react-16": "^1.0.5",
-    "@types/isomorphic-fetch": "^0.0.35",
-    "@types/jest": "^24.0.12",
-    "@types/react": "^16.8.15",
-    "@types/react-native": "^0.57.51",
-    "@types/react-navigation": "^3.0.6",
-    "@types/react-test-renderer": "^16.8.1",
-    "babel-jest": "^24.7.1",
-    "enzyme": "^3.9.0",
-    "enzyme-adapter-react-16": "^1.12.1",
-    "jest": "^24.7.1",
-    "jest-fetch-mock": "^2.1.2",
-    "jest-serializer-enzyme": "^1.0.0",
-    "metro-react-native-babel-preset": "^0.54.0",
-    "react-addons-test-utils": "^15.6.2",
-    "react-dom": "^16.8.6",
-    "react-test-renderer": "16.8.6",
-    "tslint": "^5.16.0",
+    "@babel/core": "^7.12.9",
+    "@babel/runtime": "^7.12.5",
+    "@react-native-community/eslint-config": "^2.0.0",
+    "@types/jest": "^26.0.23",
+    "@types/react-native": "^0.64.5",
+    "@types/react-test-renderer": "^16.9.2",
+    "babel-jest": "^26.6.3",
+    "eslint": "^7.14.0",
+    "jest": "^26.6.3",
+    "metro-react-native-babel-preset": "^0.64.0",
+    "react-test-renderer": "17.0.1",
+    "tslint": "^6.1.3",
     "tslint-eslint-rules": "^5.4.0",
-    "tslint-react": "^4.0.0",
-    "typescript": "^3.4.5"
+    "tslint-react": "^5.0.0",
+    "typescript": "^3.8.3"
+  },
+  "resolutions": {
+    "@types/react": "^17"
   },
   "jest": {
     "preset": "react-native",
-    "transformIgnorePatterns": [
-      "node_modules/(?!(jest-)?react-native|react-navigation)"
-    ],
-    "transform": {
-      "^.+\\.js$": "<rootDir>/node_modules/react-native/jest/preprocessor.js",
-      "\\.(ts|tsx)$": "ts-jest"
-    },
-    "globals": {
-      "ts-jest": {
-        "tsConfig": "tsconfig.jest.json"
-      }
-    },
     "moduleFileExtensions": [
       "ts",
       "tsx",
-      "js"
-    ],
-    "setupFiles": [
-      "./tests/setup.js"
-    ],
-    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$"
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
   }
 }

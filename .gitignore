@@ -21,18 +21,17 @@ DerivedData
 *.ipa
 *.xcuserstate
 project.xcworkspace
+prebuild.log
 
 # Android/IntelliJ
 #
-build/
 .idea
 .gradle
 local.properties
 *.iml
-
-# Visual Studio Code
-#
-.vscode/
+*.apk
+output.json
+*.keystore*
 
 # node.js
 #
@@ -50,15 +49,63 @@ buck-out/
 # It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the
 # screenshots whenever they are needed.
 # For more information about the recommended setup visit:
-# https://docs.fastlane.tools/best-practices/source-control/
+# https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Gitignore.md
 
-*/fastlane/report.xml
-*/fastlane/Preview.html
-*/fastlane/screenshots
+fastlane/report.xml
+android/fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
 
-# Bundle artifact
-*.jsbundle
+# docs
+doc/
+coverage/*
 
-# Jest
-#
-.jest/
+# CocoaPods
+ios/Pods/
+
+# Misc
+android/app/src/main/assets/
+android/app/src/main/java/com/bannermobile/weeklyad/release/
+.eslintrc.json
+.prettierignore
+.generated.js
+.generated.js.map
+.env
+ios/third-party
+
+# Bitrise stuff
+ios/codesigndoc_exports/
+
+# yarn.lock is the boss
+package.lock
+package-lock.json
+package.lock.json
+
+releaseandroid.sh
+.vscode/
+.deco/
+.gitsecret/keys/random_seed
+releaseallandroid.sh
+runandroid.sh
+.history/
+android/signing/
+
+# fastlane specific
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+.env.default
+
+#TCx Amplify Specific
+tmp/
+
+# react-native-config codegen
+ios/tmp.xcconfig
+
+# test report
+test-report.xml
+
+# Sonar Cloud
+.scannerwork
+scannerwork/report-task.txt

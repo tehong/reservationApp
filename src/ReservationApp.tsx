@@ -1,7 +1,7 @@
-import React, { PureComponent } from "react";
-import RootNavigation from "./navigation/RootNavigation";
-import Backend, { BackendProvider } from "./api/Backend";
-import ReservationProvider from "./providers/ReservationProvider";
+import React, {PureComponent} from 'react';
+import RootNavigation from './navigation/RootNavigation';
+import Backend, {BackendProvider} from './api/Backend';
+import ReservationProvider from './providers/ReservationProvider';
 // import { View } from "react-native";
 
 // init the backend

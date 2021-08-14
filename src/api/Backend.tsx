@@ -1,10 +1,12 @@
-import React, { PureComponent } from "react";
-import { ApolloClient, HttpLink, InMemoryCache } from "apollo-boost";
-import { ApolloProvider, graphql } from "react-apollo";
-import gql from "graphql-tag";
+import React, {PureComponent} from 'react';
+import {ApolloClient, HttpLink, InMemoryCache} from 'apollo-boost';
+import {ApolloProvider} from 'react-apollo';
+import gql from 'graphql-tag';
+import 'react-native-get-random-values';
+import {v1 as uuidv1} from 'uuid';
 
 const BACKEND_URL =
-  "https://us1.prisma.sh/public-luckox-377/reservation-graphql-backend/dev";
+  'https://us1.prisma.sh/public-luckox-377/reservation-graphql-backend/dev';
 
 // see https://blog.brainsandbeards.com/part-2-setting-up-apollo-client-in-a-react-native-app-e766c7e872e2
 let client: any;
@@ -31,17 +33,17 @@ export default class Backend {
   static initialize() {
     client = new ApolloClient({
       link: new HttpLink({
-        uri: BACKEND_URL
+        uri: BACKEND_URL,
       }),
-      cache: new InMemoryCache()
+      cache: new InMemoryCache(),
     });
   }
-  static getReservationDataField(name = "") {
+  static getReservationDataField(name = '') {
     var reservationData: ReservationData = {
       name: name,
-      hotelName: "",
-      arrivalDate: "",
-      departureDate: ""
+      hotelName: '',
+      arrivalDate: '',
+      departureDate: '',
     };
     return reservationData;
   }
@@ -58,7 +60,7 @@ export default class Backend {
     return graphqlQuery(query);
   }
   static addReservations(reservationData: ReservationData) {
-    const uuidv1 = require("uuid/v1");
+    // const uuid = require('uuid');
     const id = uuidv1().substring(0, 15);
     const name = reservationData.name;
     const hotelName = reservationData.hotelName;
@@ -73,7 +75,7 @@ export default class Backend {
             arrivalDate: "${arrivalDate}"
             departureDate: "${departureDate}"
           }
-        ) { 
+        ) {
           id
           name
           hotelName
@@ -98,18 +100,18 @@ const graphqlQuery = (query: any) => {
   return new Promise((resolve, reject) => {
     client
       .query({
-        query: query
+        query: query,
       })
-      .then(result => {
+      .then((result: {data: unknown}) => {
         resolve(result.data);
       })
-      .catch(error => {
+      .catch((error: any) => {
         reject(error);
       });
   });
 };
 
-const graphqlMutation = (mutation: any, refetchQuery: any = qql``) => {
+const graphqlMutation = (mutation: any, refetchQuery: any = gql``) => {
   return new Promise((resolve, reject) => {
     client
       .mutate({
@@ -117,14 +119,14 @@ const graphqlMutation = (mutation: any, refetchQuery: any = qql``) => {
         refetchQueries: [
           {
             query: refetchQuery,
-            variables: { repoFullName: "apollographql/apollo-client" }
-          }
-        ]
+            variables: {repoFullName: 'apollographql/apollo-client'},
+          },
+        ],
       })
-      .then(result => {
+      .then((result: {data: unknown}) => {
         resolve(result.data);
       })
-      .catch(error => {
+      .catch((error: any) => {
         reject(error);
       });
   });
