@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react';
+import React, {useState} from 'react';
 
 // Set Up The Initial Context
 const ReservationContext = React.createContext('Reservation');
@@ -7,30 +7,26 @@ export const ReservationConsumer = ReservationContext.Consumer;
 // Create the provider using a traditional React.Component class
 interface Props {}
 interface State {}
-class ReservationProvider extends PureComponent<Props, State> {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      name: '',
-      updateReservation: (updatedReservation: any) =>
-        this.updateReservation(updatedReservation),
-    };
-  }
-  updateReservation = (updatedReservation: any) => {
-    this.setState(prevState => ({
-      ...prevState,
-      ...updatedReservation,
-    }));
+const ReservationProvider = (props: any) => {
+  const initialState = {
+    name: '',
+    updateReservation: (updatedReservation: any) =>
+      updateReservation(updatedReservation),
   };
-  render() {
-    return (
-      // value prop is where we define what values
-      // that are accessible to consumer components
-      <ReservationContext.Provider value={this.state}>
-        {this.props.children}
-      </ReservationContext.Provider>
-    );
-  }
-}
+  const [state, setState] = useState(initialState);
+  const updateReservation = (updatedReservation: any) => {
+    setState({
+      ...state,
+      ...updatedReservation,
+    });
+  };
+  return (
+    // value prop is where we define what values
+    // that are accessible to consumer components
+    <ReservationContext.Provider value={state}>
+      {props.children}
+    </ReservationContext.Provider>
+  );
+};
 
 export default ReservationProvider;

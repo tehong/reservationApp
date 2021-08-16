@@ -10,14 +10,9 @@ const BACKEND_URL =
 
 // see https://blog.brainsandbeards.com/part-2-setting-up-apollo-client-in-a-react-native-app-e766c7e872e2
 let client: any;
-interface Props {}
-export class BackendProvider extends PureComponent<Props> {
-  render() {
-    return (
-      <ApolloProvider client={client}>{this.props.children}</ApolloProvider>
-    );
-  }
-}
+export const BackendProvider = (props: any) => {
+  return <ApolloProvider client={client}>{props.children}</ApolloProvider>;
+};
 
 export interface ReservationData {
   name: string;
@@ -60,7 +55,6 @@ export default class Backend {
     return graphqlQuery(query);
   }
   static addReservations(reservationData: ReservationData) {
-    // const uuid = require('uuid');
     const id = uuidv1().substring(0, 15);
     const name = reservationData.name;
     const hotelName = reservationData.hotelName;

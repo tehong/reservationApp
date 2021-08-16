@@ -4,7 +4,7 @@ import {TextInput} from 'react-native';
 export const TextInputComponent = ({value, onChangeText, name, ...props}) => (
   <TextInput
     value={value}
-    onChangeText={value => onChangeText(name, value)}
+    onChangeText={text => onChangeText(name, text)}
     {...props}
   />
 );

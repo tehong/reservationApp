@@ -8,13 +8,11 @@
  * @format
  */
 
-import React, { PureComponent } from "react";
-import { View } from "react-native";
-import ReservationApp from "./src/ReservationApp";
+import React from 'react';
+import ReservationApp from './src/ReservationApp';
 
 interface Props {}
-export default class App extends PureComponent<Props> {
-  render() {
-    return <ReservationApp />;
-  }
-}
+const App = () => {
+  return <ReservationApp />;
+};
+export default App;
