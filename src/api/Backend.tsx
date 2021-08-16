@@ -84,13 +84,13 @@ Backend.addReservations = (reservationData: ReservationData) => {
   return graphqlMutation(mutation, refetchQuery);
 };
 
-const graphqlQuery = (query: any) => {
+const graphqlQuery = (query: any): any => {
   return new Promise((resolve, reject) => {
     client
       .query({
         query: query,
       })
-      .then((result: {data: unknown}) => {
+      .then((result: {data: any}) => {
         resolve(result.data);
       })
       .catch((error: any) => {
@@ -99,7 +99,7 @@ const graphqlQuery = (query: any) => {
   });
 };
 
-const graphqlMutation = (mutation: any, refetchQuery: any = gql``) => {
+const graphqlMutation = (mutation: any, refetchQuery: any = gql``): any => {
   return new Promise((resolve, reject) => {
     client
       .mutate({
@@ -111,7 +111,7 @@ const graphqlMutation = (mutation: any, refetchQuery: any = gql``) => {
           },
         ],
       })
-      .then((result: {data: unknown}) => {
+      .then((result: {data: any}) => {
         resolve(result.data);
       })
       .catch((error: any) => {

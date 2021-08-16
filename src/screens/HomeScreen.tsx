@@ -1,47 +1,37 @@
-import React, {PureComponent} from 'react';
+import React, {useState} from 'react';
 import {View, Text, StyleSheet, Button, TextInput} from 'react-native';
 import {ROUTES} from '../navigation/RootNavigation';
-import {ScreenProps} from 'react-navigation';
 import {ReservationConsumer} from '../providers/ReservationProvider';
 
-interface Props {
-  navigation: ScreenProps;
-  updateReservation: any;
-}
 interface State {
   name: string;
 }
-class HomeScreen extends PureComponent<Props, State> {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      name: '',
-    };
-  }
-  private onChangeText = (name: string) => {
+const HomeScreen = (props: any) => {
+  const [state, setState] = useState({
+    name: '',
+  });
+  const onChangeText = (name: string) => {
     // make a copy and make the change
-    this.setState({name});
+    setState({name});
   };
-  private enterName = () => {
-    var name = this.state.name;
-    this.props.updateReservation({name});
-    this.props.navigation.navigate(ROUTES.RootAction);
+  const enterName = () => {
+    let name = state.name;
+    props.updateReservation({name});
+    props.navigation.navigate(ROUTES.RootAction);
   };
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to hotel reservation system!</Text>
-        <Text style={styles.welcome}>Please enter your name:</Text>
-        <TextInput
-          style={styles.textInput}
-          value={this.state.value}
-          onChangeText={this.onChangeText}
-        />
-        <Button title={'Enter'} onPress={this.enterName} />
-      </View>
-    );
-  }
-}
+  return (
+    <View style={styles.container}>
+      <Text style={styles.welcome}>Welcome to hotel reservation system!</Text>
+      <Text style={styles.welcome}>Please enter your name:</Text>
+      <TextInput
+        style={styles.textInput}
+        value={state.name}
+        onChangeText={onChangeText}
+      />
+      <Button title={'Enter'} onPress={enterName} />
+    </View>
+  );
+};
 
 // Added to connect ReservationConsumer
 // To pass props to AccountUpdate

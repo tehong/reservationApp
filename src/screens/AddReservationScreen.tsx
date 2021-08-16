@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react';
+import React, {useState} from 'react';
 import {View, Text, StyleSheet, Button, Alert} from 'react-native';
 import Backend, {ReservationData} from '../api/Backend';
 import {TextInputComponent} from '../components/TextInputComponent';
@@ -12,69 +12,65 @@ interface Props {
 interface State {
   reservationData: any;
 }
-class AddReservationScreen extends PureComponent<Props, State> {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      reservationData: Backend.getReservationDataField(this.props.name),
-    };
-  }
-  private onPress = () => {
-    Backend.addReservations(this.state.reservationData)
-      .then(data => {
+const AddReservationScreen = (props: any) => {
+  const [state, setState] = useState({
+    reservationData: Backend.getReservationDataField(props.name),
+  });
+  const onPress = () => {
+    Backend.addReservations(state.reservationData)
+      .then(() => {
         Alert.alert('Success', 'Your reservation is added successfully!');
-        this.props.navigation.goBack();
+        props.navigation.goBack();
       })
-      .catch(error => {
+      .catch((error: any) => {
         Alert.alert('Error', `reservation error = ${JSON.stringify(error)}`);
       });
   };
 
-  private onChangeText = (name: string, value: string) => {
+  const onChangeText = (name: string, value: string) => {
     // make a copy and make the change
-    var reservationData = JSON.parse(
-      JSON.stringify(this.state.reservationData),
-    );
+    var reservationData = JSON.parse(JSON.stringify(state.reservationData));
     reservationData[name] = value;
-    this.setState({reservationData});
+    setState({reservationData});
   };
 
-  private renderFields = () => {
-    const reservationData: ReservationData = this.state.reservationData;
+  const renderFields = () => {
+    const reservationData: ReservationData = state.reservationData;
     let fieldNames = Object.keys(reservationData);
-    return fieldNames.map((field, index) => {
-      let value = '';
+    return fieldNames.map(field => {
       if (field === 'name') {
         return (
           <Text key={field} style={styles.prompt}>
-            {`Hi ${this.props.name}, please enter your reservation`}:
+            {`Hi ${props.name}, please enter your reservation`}:
           </Text>
         );
       }
+      const reservationDataField =
+        state.reservationData[field as keyof ReservationData];
+      const textInputProps = {
+        style: styles.textInput,
+        value: reservationDataField,
+        name: field,
+        onChangeText: onChangeText,
+      };
+
       return (
         <View key={field} style={styles.inputContainer}>
           <Text style={styles.fieldName}>{field}:</Text>
-          <TextInputComponent
-            style={styles.textInput}
-            value={this.state.reservationData[field]}
-            name={field}
-            onChangeText={this.onChangeText}
-          />
+          <TextInputComponent {...textInputProps} />
         </View>
       );
     });
   };
 
-  render() {
-    const inputFields = this.renderFields();
-    return (
-      <View style={styles.container}>
-        {inputFields}
-        <Button title="Add Reservation" onPress={this.onPress} />
-      </View>
-    );
-  }
-}
+  const inputFields = renderFields();
+  return (
+    <View style={styles.container}>
+      {inputFields}
+      <Button title="Add Reservation" onPress={onPress} />
+    </View>
+  );
+};
 
 const ConnectedAddReservation = (props: any) => (
   <ReservationConsumer>

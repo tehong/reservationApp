@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -16,19 +16,16 @@ interface State {
   reservations: any;
   isLoading: any;
 }
-class ListReservationScreen extends PureComponent<Props, State> {
-  constructor(props: Readonly<{}>) {
-    super(props);
-    this.state = {
-      reservations: [],
-      isLoading: true,
-    };
-  }
+const ListReservationScreen = (props: any) => {
+  const [state, setState] = useState({
+    reservations: [],
+    isLoading: true,
+  });
 
-  keyExtractor = (item: any, index: number) => {
+  const keyExtractor = (item: any) => {
     return item.id;
   };
-  renderItem = ({item, index}) => {
+  const renderItem = (item: any) => {
     var name = item.name;
     var arrivalDate = item.arrivalDate;
     var departureDate = item.departureDate;
@@ -40,44 +37,41 @@ class ListReservationScreen extends PureComponent<Props, State> {
     );
   };
 
-  componentDidMount() {
-    Backend.listReservations(this.props.name)
-      .then(data => {
-        var reservations = data.reservations;
-        this.setState({reservations, isLoading: false});
+  useEffect(() => {
+    Backend.listReservations(props.name)
+      .then((data: {reservations: any}) => {
+        setState({reservations: data.reservations, isLoading: false});
       })
-      .catch(error => {
-        this.setState({reservations: [], isLoading: false});
+      .catch(() => {
+        setState({reservations: [], isLoading: false});
       });
-  }
-  render() {
-    var content = <ActivityIndicator />;
-    var {reservations, isLoading} = this.state;
-    if (!isLoading) {
-      if (reservations.length > 0) {
-        content = (
-          <FlatList
-            keyExtractor={this.keyExtractor}
-            data={reservations}
-            renderItem={this.renderItem}
-            showsVerticalScrollIndicator={true}
-          />
-        );
-      } else {
-        content = <Text>No reservation found!</Text>;
-      }
+  });
+  var content = <ActivityIndicator />;
+  let {reservations, isLoading} = state;
+  if (!isLoading) {
+    if (reservations.length > 0) {
+      content = (
+        <FlatList
+          keyExtractor={keyExtractor}
+          data={reservations}
+          renderItem={renderItem}
+          showsVerticalScrollIndicator={true}
+        />
+      );
+    } else {
+      content = <Text>No reservation found!</Text>;
     }
-
-    return (
-      <View style={styles.container}>
-        <Text style={{fontWeight: 'bold'}}>
-          Hi {this.props.name}!, here are your reservations:
-        </Text>
-        {content}
-      </View>
-    );
   }
-}
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}>
+        Hi {props.name}!, here are your reservations:
+      </Text>
+      {content}
+    </View>
+  );
+};
 
 // Connect props from ReservationConsumer
 // Before component initialization
@@ -99,7 +93,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   text: {
-    margin: 10,
+    fontWeight: 'bold',
   },
   item: {
     margin: 10,

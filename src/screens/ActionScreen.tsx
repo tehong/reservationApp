@@ -1,28 +1,22 @@
-import React, {PureComponent} from 'react';
+import React from 'react';
 import {View, Text, StyleSheet, Button} from 'react-native';
 import {ROUTES} from '../navigation/RootNavigation';
-import {ScreenProps} from 'react-navigation';
 
-interface Props {
-  navigation: ScreenProps;
-}
-class ActionScreen extends PureComponent<Props> {
-  private addReservation = () => {
-    this.props.navigation.navigate(ROUTES.RootAddReservation);
+const ActionScreen = (props: any) => {
+  const addReservation = () => {
+    props.navigation.navigate(ROUTES.RootAddReservation);
   };
-  private listReservation = () => {
-    this.props.navigation.navigate(ROUTES.RootListReservation);
+  const listReservation = () => {
+    props.navigation.navigate(ROUTES.RootListReservation);
   };
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Please select an action below:</Text>
-        <Button title={'List Reservation'} onPress={this.listReservation} />
-        <Button title={'Add Reservation'} onPress={this.addReservation} />
-      </View>
-    );
-  }
-}
+  return (
+    <View style={styles.container}>
+      <Text style={styles.welcome}>Please select an action below:</Text>
+      <Button title={'List Reservation'} onPress={listReservation} />
+      <Button title={'Add Reservation'} onPress={addReservation} />
+    </View>
+  );
+};
 
 export default ActionScreen;
 
