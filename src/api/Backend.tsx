@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react';
+import React from 'react';
 import {ApolloClient, HttpLink, InMemoryCache} from 'apollo-boost';
 import {ApolloProvider} from 'react-apollo';
 import gql from 'graphql-tag';
@@ -20,30 +20,25 @@ export interface ReservationData {
   arrivalDate: string;
   departureDate: string;
 }
-
-export default class Backend {
-  /**
-   * Initializes Backend
-   */
-  static initialize() {
-    client = new ApolloClient({
-      link: new HttpLink({
-        uri: BACKEND_URL,
-      }),
-      cache: new InMemoryCache(),
-    });
-  }
-  static getReservationDataField(name = '') {
-    var reservationData: ReservationData = {
-      name: name,
-      hotelName: '',
-      arrivalDate: '',
-      departureDate: '',
-    };
-    return reservationData;
-  }
-  static listReservations(name: string) {
-    const query = gql`query {
+const Backend = () => {};
+Backend.initialize = () => {
+  client = new ApolloClient({
+    link: new HttpLink({
+      uri: BACKEND_URL,
+    }),
+    cache: new InMemoryCache(),
+  });
+};
+Backend.getReservationDataField = (name = '') => {
+  return {
+    name: name,
+    hotelName: '',
+    arrivalDate: '',
+    departureDate: '',
+  };
+};
+Backend.listReservations = (name: string) => {
+  const query = gql`query {
         reservations(where: { name: "${name}" }) {
           id
           name
@@ -52,15 +47,15 @@ export default class Backend {
           departureDate
         }
       }`;
-    return graphqlQuery(query);
-  }
-  static addReservations(reservationData: ReservationData) {
-    const id = uuidv1().substring(0, 15);
-    const name = reservationData.name;
-    const hotelName = reservationData.hotelName;
-    const arrivalDate = reservationData.arrivalDate;
-    const departureDate = reservationData.departureDate;
-    const mutation = gql`mutation {
+  return graphqlQuery(query);
+};
+Backend.addReservations = (reservationData: ReservationData) => {
+  const id = uuidv1().substring(0, 15);
+  const name = reservationData.name;
+  const hotelName = reservationData.hotelName;
+  const arrivalDate = reservationData.arrivalDate;
+  const departureDate = reservationData.departureDate;
+  const mutation = gql`mutation {
         createReservation(
           data: {
             id: "${id}"
@@ -77,7 +72,7 @@ export default class Backend {
           departureDate
         }
       }`;
-    const refetchQuery = gql`query {
+  const refetchQuery = gql`query {
         reservations(where: { name: "${name}" }) {
           id
           name
@@ -86,9 +81,8 @@ export default class Backend {
           departureDate
         }
       }`;
-    return graphqlMutation(mutation, refetchQuery);
-  }
-}
+  return graphqlMutation(mutation, refetchQuery);
+};
 
 const graphqlQuery = (query: any) => {
   return new Promise((resolve, reject) => {
@@ -125,3 +119,5 @@ const graphqlMutation = (mutation: any, refetchQuery: any = gql``) => {
       });
   });
 };
+
+export default Backend;
